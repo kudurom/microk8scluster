@@ -68,7 +68,7 @@ spec:
       - name: data
         persistentVolumeClaim:
           claimName: heimdall-pvc
-  ---
+---
 apiVersion: v1
 kind: Service
 metadata:

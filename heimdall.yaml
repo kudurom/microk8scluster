@@ -36,7 +36,7 @@ spec:
       volumes:
       - name: config-volume
         hostPath:
-          path: /data/appdata/config
+          path: /data/config
       - name: data
         persistentVolumeClaim:
           claimName: heimdall-pvc

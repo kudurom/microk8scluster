@@ -55,12 +55,8 @@ spec:
         volumeMounts:
         - name: config
           mountPath: /config
-        ports:
-        - containerPort: 80
-        - containerPort: 443
-        volumeDevices:
         - name: data
-          devicePath: /data
+          mountPath: /data
       volumes:
       - name: config
         hostPath:

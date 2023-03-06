@@ -25,7 +25,7 @@ spec:
         - name: TZ
           value: "Etc/UTC"
         volumeMounts:
-        - name: /data
+        - name: /data/
           mountPath: /config
         ports:
         - containerPort: 80
@@ -34,7 +34,7 @@ spec:
         - name: data
           devicePath: /data
       volumes:
-      - name: config-volume
+      - name: /data/
         hostPath:
           path: /data/config
       - name: data

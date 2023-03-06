@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: uptime-kuma-service
+  labels:
+    app: uptime-kuma
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 3001
+      protocol: TCP
+      targetPort: 3001
+  selector:
+    app: uptime-kuma
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: uptime-kuma-deployment
+  labels:
+    app: uptime-kuma
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+    spec:
+      containers:
+        - name: uptime-kuma-container
+          image: louislam/uptime-kuma:1
+          volumeMounts:
+            - name: uptime-kuma-data
+              mountPath: /app/data
+          ports:
+            - containerPort: 3001
+      volumes:
+        - name: uptime-kuma-data
+          persistentVolumeClaim:
+            claimName: uptime-kuma-data-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: uptime-kuma-data-pvc
+  labels:
+    app: uptime-kuma
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
